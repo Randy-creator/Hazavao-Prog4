@@ -10,10 +10,7 @@ import org.springframework.web.client.RestTemplate;
 public class ChatGPTService {
 
   private static final String API_URL = "https://api.openai.com/v1/chat/completions";
-
-  // Remplace ici par ta vraie clé API, sans "OPENAI_API_KEY=" ni retours à la ligne
-  private static final String API_KEY =
-      "api key ici";
+  private static final String API_KEY = "api key ici";
 
   private final RestTemplate restTemplate = new RestTemplate();
 
@@ -21,11 +18,14 @@ public class ChatGPTService {
     HttpHeaders headers = new HttpHeaders();
     headers.setContentType(MediaType.APPLICATION_JSON);
 
-    // Utilisation correcte de la clé API dans le header Authorization Bearer
     headers.setBearerAuth(API_KEY);
 
     Map<String, Object> userMessage =
-        Map.of("role", "user", "content", "Donne-moi une définition du mot et traduis la definition en malagasy : " + word);
+        Map.of(
+            "role",
+            "user",
+            "content",
+            "Donne-moi une définition du mot et traduis la definition en malagasy : " + word);
 
     Map<String, Object> requestBody =
         Map.of("model", "gpt-3.5-turbo", "messages", List.of(userMessage), "max_tokens", 100);
