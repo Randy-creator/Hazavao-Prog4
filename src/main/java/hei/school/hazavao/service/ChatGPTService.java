@@ -26,7 +26,7 @@ public class ChatGPTService {
     headers.setBearerAuth(API_KEY);
 
     Map<String, Object> userMessage =
-        Map.of("role", "user", "content", "Donne-moi une définition du mot et traduis le en Malgache : " + word);
+        Map.of("role", "user", "content", "Donne-moi une définition du mot et traduis la definition en Malgache : " + word);
 
     Map<String, Object> requestBody =
         Map.of("model", "gpt-3.5-turbo", "messages", List.of(userMessage), "max_tokens", 100);
