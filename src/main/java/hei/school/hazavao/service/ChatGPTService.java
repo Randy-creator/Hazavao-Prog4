@@ -10,14 +10,19 @@ import org.springframework.web.client.RestTemplate;
 public class ChatGPTService {
 
   private static final String API_URL = "https://api.openai.com/v1/chat/completions";
-  private static final String API_KEY = "api key ici";
+
+  // On récupère la clé depuis la variable d'environnement OPENAI_API_KEY
+  private static final String API_KEY = System.getenv("OPENAI_API_KEY");
 
   private final RestTemplate restTemplate = new RestTemplate();
 
   public String getDefinition(String word) {
+    if (API_KEY == null || API_KEY.isBlank()) {
+      return "Erreur : la clé API n'est pas définie dans les variables d'environnement.";
+    }
+
     HttpHeaders headers = new HttpHeaders();
     headers.setContentType(MediaType.APPLICATION_JSON);
-
     headers.setBearerAuth(API_KEY);
 
     Map<String, Object> userMessage =
@@ -25,7 +30,7 @@ public class ChatGPTService {
             "role",
             "user",
             "content",
-            "Donne-moi une définition du mot et traduis la definition en malagasy : " + word);
+            "Donne-moi une définition du mot et traduis la definition en Malgache : " + word);
 
     Map<String, Object> requestBody =
         Map.of("model", "gpt-3.5-turbo", "messages", List.of(userMessage), "max_tokens", 100);
